@@ -10,7 +10,7 @@ Kodun okunabilirliğini kolaylaştırmak amacıyla kod içerisinde bulunan synta
 
 Bu bölümde, projenin temel yapı taşlarını oluşturan kütüphaneler, sınıf yapısı ve fonksiyonların teknik işleyişi açıklanmıştır.
 
-* **Kullanılan Kütüphaneler ve Amaçları:**
+Kullanılan Kütüphaneler ve Amaçları:
 * `pandas`: Veri setini okumak (CSV), veri çerçeveleri (DataFrame) oluşturmak, sütun bazlı işlemler ve veri manipülasyonu (gruplama, birleştirme) yapmak için kullanılır.
 * `scipy.stats.linregress`: Bilimsel hesaplama kütüphanesinden çağrılan bu fonksiyon, veriler arasındaki doğrusal ilişkiyi (trendi) hesaplayarak eğim (slope) değerini bulur.
 * `sklearn (Scikit-learn)`: Makine öğrenmesi algoritmaları için kullanılır.
