@@ -3,6 +3,7 @@ AIProjectDataSet içerisinde, senaryo gereği, bir kurumun geliştirdiği projel
 
 Kodun okunabilirliğini kolaylaştırmak amacıyla kod içerisinde bulunan syntax özellikleri, makine öğrenmesi algoritmaları, özellik mühendisliği kavramları ve performans metrikleri detaylı bir şekilde açıklanacaktır.
 
+
 ### **Kod Dokümantasyonu ve Teknik Analiz Raporu**
 
 #### **1. Syntax Özellikleri**
