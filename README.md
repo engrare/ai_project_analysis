@@ -3,86 +3,87 @@ AIProjectDataSet içerisinde, senaryo gereği, bir kurumun geliştirdiği projel
 
 Kodun okunabilirliğini kolaylaştırmak amacıyla kod içerisinde bulunan syntax özellikleri, makine öğrenmesi algoritmaları, özellik mühendisliği kavramları ve performans metrikleri detaylı bir şekilde açıklanacaktır.
 
-1. Syntax Özellikleri
+### **Kod Dokümantasyonu ve Teknik Analiz Raporu**
 
-Bu bölümde projenin temel yapı taşlarını oluşturan kütüphaneler, sınıf yapısı ve fonksiyonların teknik işleyişi açıklanmıştır.
+#### **1. Syntax Özellikleri**
 
-Kullanılan Kütüphaneler ve Amaçları:
- `pandas`: Veri setini okumak (CSV), veri çerçeveleri (DataFrame) oluşturmak, sütun bazlı işlemler ve veri manipülasyonu (gruplama, birleştirme) yapmak için kullanılır.
- `scipy.stats.linregress`: Bilimsel hesaplama kütüphanesinden çağrılan bu fonksiyon, veriler arasındaki doğrusal ilişkiyi (trendi) hesaplayarak eğim (slope) değerini bulur.
- `sklearn (Scikit-learn)`: Makine öğrenmesi algoritmaları için kullanılır.
- `MinMaxScaler`: Verileri belirli bir aralığa (genellikle 0-1) sıkıştırarak algoritmaların (kümeleme vb.) ölçek farkından etkilenmesini önler.
- `AgglomerativeClustering`: Hiyerarşik kümeleme algoritmasını uygular.
- `IsolationForest`: Anomali tespiti için kullanılır.
- `matplotlib.pyplot` ve `seaborn`: Analiz sonuçlarını görselleştirmek (grafik çizimi) için kullanılır.
- `warnings`: Kodun çalışmasını etkilemeyen uyarı mesajlarını gizleyerek çıktı ekranının temiz kalmasını sağlar.
+Bu bölümde, projenin temel yapı taşlarını oluşturan kütüphaneler, sınıf yapısı ve fonksiyonların teknik işleyişi açıklanmıştır.
 
-
-Class (Sınıf) Yapısının Kullanımı:
-Kod, `AdvancedAIProjectAnalyzer` adında bir sınıf (class) yapısı üzerine kurulmuştur. Bu yapı kodun modüler, okunabilir ve yeniden kullanılabilir olmasını sağlar.
-`__init__`: Sınıf başlatıldığında çalışır, dosya yolunu ve boş veri değişkenlerini tanımlar.
-Sınıf içindeki metodlar (`load_data`, `feature_engineering`, vb.) verinin yüklenmesinden raporlanmasına kadar olan işlem boru hattını (pipeline) sırasıyla yönetir.
+* **Kullanılan Kütüphaneler ve Amaçları:**
+* `pandas`: Veri setini okumak (CSV), veri çerçeveleri (DataFrame) oluşturmak, sütun bazlı işlemler ve veri manipülasyonu (gruplama, birleştirme) yapmak için kullanılır.
+* `scipy.stats.linregress`: Bilimsel hesaplama kütüphanesinden çağrılan bu fonksiyon, veriler arasındaki doğrusal ilişkiyi (trendi) hesaplayarak eğim (slope) değerini bulur.
+* `sklearn (Scikit-learn)`: Makine öğrenmesi algoritmaları için kullanılır.
+* `MinMaxScaler`: Verileri belirli bir aralığa (genellikle 0-1) sıkıştırarak algoritmaların (kümeleme vb.) ölçek farkından etkilenmesini önler.
+* `AgglomerativeClustering`: Hiyerarşik kümeleme algoritmasını uygular.
+* `IsolationForest`: Anomali tespiti için kullanılır.
 
 
-Import Edilen Fonksiyonların İşlevi:
+* `matplotlib.pyplot` ve `seaborn`: Analiz sonuçlarını görselleştirmek (grafik çizimi) için kullanılır.
+* `warnings`: Kodun çalışmasını etkilemeyen uyarı mesajlarını gizleyerek çıktı ekranının temiz kalmasını sağlar.
+
+
+* **Class (Sınıf) Yapısının Kullanımı:**
+Kod, `AdvancedAIProjectAnalyzer` adında bir sınıf (class) yapısı üzerine kurulmuştur. Bu yapı, kodun modüler, okunabilir ve yeniden kullanılabilir olmasını sağlar.
+* `__init__`: Sınıf başlatıldığında çalışır, dosya yolunu ve boş veri değişkenlerini tanımlar.
+* Sınıf içindeki metodlar (`load_data`, `feature_engineering`, vb.) verinin yüklenmesinden raporlanmasına kadar olan işlem boru hattını (pipeline) sırasıyla yönetir.
+
+
+* **Import Edilen Fonksiyonların İşlevi:**
 Örneğin `linregress` fonksiyonu, bir proje için yıllara göre verimlilik puanlarını alıp, bu puanların zamanla arttığını mı yoksa azaldığını mı gösteren "eğim" değerini hesaplar.
 
-2. Makine Öğrenmesi Algoritmaları
+#### **2. Makine Öğrenmesi Algoritmaları**
 
 Projede projeleri sınıflandırmak ve analiz etmek için üç temel yaklaşım kullanılmıştır:
 
-Hiyerarşik Kümeleme (Agglomerative Clustering - Davranışa Göre Gruplandırma):
+* **Hiyerarşik Kümeleme (Agglomerative Clustering - Davranışa Göre Gruplandırma):**
 * Veri noktalarını benzerliklerine göre gruplayan "aşağıdan yukarıya" bir yaklaşımdır.
 * Kodda `n_clusters=3` parametresi ile projeler; performans ve trend özelliklerine göre 3 ana gruba ayrılır.
-* Algoritma sonrası grupların ortalama puanlarına bakılarak en yüksek skora sahip grup "STAR (Yüksek Performans)", en düşük grup "RISKY (Düşük Performans)", diğerleri ise "STANDARD" olarak etiketlenir.
+* Algoritma sonrası grupların ortalama puanlarına bakılarak, en yüksek skora sahip grup **"STAR (Yüksek Performans)"**, en düşük grup **"RISKY (Düşük Performans)"**, diğerleri ise **"STANDARD"** olarak etiketlenir.
 
 
-İzolasyon Ormanı (Isolation Forest - Aykırı Değer Tespiti):
+* **İzolasyon Ormanı (Isolation Forest - Aykırı Değer Tespiti):**
 * Normal verilerin yoğunlaştığı bölgelerden uzak kalan, "aykırı" (outlier) verileri tespit eder.
 * Rastgele karar ağaçları oluşturarak çalışır; anomali olan veriler daha az sayıda bölünme ile izole edilebilir.
 * Kodda `contamination=0.15` parametresi ile verilerin en aykırı %15'lik kısmının anomali adayı (örneğin; beklenmedik başarı veya başarısızlık) olduğu varsayılır. Sonuçta `-1` değeri anomaliyi temsil eder.
 
 
-Ağırlıklı Puanlama (Weighted Scoring - Karar Destek Mekanizması):
+* **Ağırlıklı Puanlama (Weighted Scoring - Karar Destek Mekanizması):**
 * Projeleri tek bir kritere göre değil, birden fazla kriterin önem derecesine göre sıralamak için kullanılır.
 * Kod içerisindeki formül şu şekildedir:
 
-  Final Score = (Trend*0.50) + (Efficiency*0.30) + (Budget*0.20)
+
+* Bu formül, projenin gelecekteki potansiyeline (Trend) en yüksek ağırlığı verirken, mevcut verimlilik ve bütçe uyumunu da hesaba katar.
 
 
-Bu formül, projenin gelecekteki potansiyeline (Trend) en yüksek ağırlığı verirken, mevcut verimlilik ve bütçe uyumunu da hesaba katar.
 
-
-3. Özellik Mühendisliği (Feature Engineering) Kavramları
+#### **3. Özellik Mühendisliği (Feature Engineering) Kavramları**
 
 Ham verinin makine öğrenmesi modelleri için anlamlı hale getirilmesi sürecidir.
 
-Parametrelerin Anlamları ve Dönüşümleri:
-* Veri:** `Cost` (Maliyet), `Investment` (Yatırım), `Fraud` (Dolandırıcılık Önleme Başarısı), `CSAT` (Müşteri Memnuniyeti), `ProcessingTime` (İşlem Süresi).
-* Dönüşüm:** CSV dosyasındaki veriler genellikle metin (string) formatında ve ondalık ayracı virgül (`,`) ile gelir. Kod, `str.replace(',', '.')` işlemi ile virgülleri noktaya çevirir ve `pd.to_numeric` ile metni sayısal (float) veriye dönüştürür. Hatalı veya boş veriler `0` ile doldurulur.
+* **Parametrelerin Anlamları ve Dönüşümleri:**
+* **Veri:** `Cost` (Maliyet), `Investment` (Yatırım), `Fraud` (Dolandırıcılık Önleme Başarısı), `CSAT` (Müşteri Memnuniyeti), `ProcessingTime` (İşlem Süresi).
+* **Dönüşüm:** CSV dosyasındaki veriler genellikle metin (string) formatında ve ondalık ayracı virgül (`,`) ile gelir. Kod, `str.replace(',', '.')` işlemi ile virgülleri noktaya çevirir ve `pd.to_numeric` ile metni sayısal (float) veriye dönüştürür. Hatalı veya boş veriler `0` ile doldurulur.
 
 
 
-4. Performans Metrikleri
+#### **4. Performans Metrikleri**
 
 Projelerin başarısını ölçmek için türetilen matematiksel göstergelerdir.
 
-Bütçe Sapması Skoru (Budget Deviation):
+* **Bütçe Sapması Skoru (Budget Deviation):**
 * Maliyetin, planlanan yatırımdan ne kadar saptığını mutlak değer olarak ölçer.
-Formül:
-
-$$\text{Budget Deviation} = \left| \frac{\text{Cost} - \text{Investment}}{\text{Investment}} \right|$$
-
-Bu değerin düşük olması (0'a yakın), projenin bütçeye sadık kaldığını gösterir. Kodda puanlama yapılırken `1 - Budget Deviation` kullanılarak sapmanın az olması ödüllendirilir.
+* **Formül:**
 
 
-Verimlilik Skoru (Efficiency Score):
+* Bu değerin düşük olması (0'a yakın), projenin bütçeye sadık kaldığını gösterir. Kodda puanlama yapılırken `1 - Budget Deviation` kullanılarak sapmanın az olması ödüllendirilir.
+
+
+* **Verimlilik Skoru (Efficiency Score):**
 * Projenin çıktılarını (Başarı ve Memnuniyet) girdisine (Maliyet) oranlar.
-Formül:
+* **Formül:**
 
-$$\text{Efficiency Score} = \frac{\text{Fraud} \times \text{CSAT}}{\text{Cost}} \times 1.000.000$$
 
-Burada `Fraud` ve `CSAT` değerlerinin yüksek olması, `Cost` değerinin düşük olması skoru artırır. Çarpan (1.000.000), sayıyı daha okunabilir bir ölçeğe taşımak içindir.
+* Burada `Fraud` ve `CSAT` değerlerinin yüksek olması, `Cost` değerinin düşük olması skoru artırır. Çarpan (1.000.000), sayıyı daha okunabilir bir ölçeğe taşımak içindir.
 
 
 * **Trend Eğimi (Trend Slope - Doğrusal Regresyon):**
