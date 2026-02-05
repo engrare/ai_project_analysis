@@ -13,19 +13,28 @@ Bu bölümde, projenin temel yapı taşlarını oluşturan kütüphaneler, sın�
 Kullanılan Kütüphaneler ve Amaçları:
 
 `pandas`: Veri setini okumak (CSV), veri çerçeveleri (DataFrame) oluşturmak, sütun bazlı işlemler ve veri manipülasyonu (gruplama, birleştirme) yapmak için kullanılır.
+
 `scipy.stats.linregress`: Bilimsel hesaplama kütüphanesinden çağrılan bu fonksiyon, veriler arasındaki doğrusal ilişkiyi (trendi) hesaplayarak eğim (slope) değerini bulur.
+
 `sklearn (Scikit-learn)`: Makine öğrenmesi algoritmaları için kullanılır.
+
 `MinMaxScaler`: Verileri belirli bir aralığa (genellikle 0-1) sıkıştırarak algoritmaların (kümeleme vb.) ölçek farkından etkilenmesini önler.
+
 `AgglomerativeClustering`: Hiyerarşik kümeleme algoritmasını uygular.
+
 `IsolationForest`: Anomali tespiti için kullanılır.
+
 `matplotlib.pyplot` ve `seaborn`: Analiz sonuçlarını görselleştirmek (grafik çizimi) için kullanılır.
+
 `warnings`: Kodun çalışmasını etkilemeyen uyarı mesajlarını gizleyerek çıktı ekranının temiz kalmasını sağlar.
 
 
 Class (Sınıf) Yapısının Kullanımı:
 
 Kod, `AdvancedAIProjectAnalyzer` adında bir sınıf (class) yapısı üzerine kurulmuştur. Bu yapı, kodun modüler, okunabilir ve yeniden kullanılabilir olmasını sağlar.
+
 `__init__`: Sınıf başlatıldığında çalışır, dosya yolunu ve boş veri değişkenlerini tanımlar.
+
 Sınıf içindeki metodlar (`load_data`, `feature_engineering`, vb.) verinin yüklenmesinden raporlanmasına kadar olan işlem boru hattını (pipeline) sırasıyla yönetir.
 
 
@@ -41,19 +50,23 @@ Hiyerarşik Kümeleme (Agglomerative Clustering - Davranışa Göre Gruplandırm
 
 Veri noktalarını benzerliklerine göre gruplayan "aşağıdan yukarıya" bir yaklaşımdır.
 Kodda `n_clusters=3` parametresi ile projeler; performans ve trend özelliklerine göre 3 ana gruba ayrılır.
+
 Algoritma sonrası grupların ortalama puanlarına bakılarak, en yüksek skora sahip grup **"STAR (Yüksek Performans)"**, en düşük grup **"RISKY (Düşük Performans)"**, diğerleri ise **"STANDARD"** olarak etiketlenir.
 
 
 İzolasyon Ormanı (Isolation Forest - Aykırı Değer Tespiti):
 
 Normal verilerin yoğunlaştığı bölgelerden uzak kalan, "aykırı" (outlier) verileri tespit eder.
+
 Rastgele karar ağaçları oluşturarak çalışır; anomali olan veriler daha az sayıda bölünme ile izole edilebilir.
+
 Kodda `contamination=0.15` parametresi ile verilerin en aykırı %15'lik kısmının anomali adayı (örneğin; beklenmedik başarı veya başarısızlık) olduğu varsayılır. Sonuçta `-1` değeri anomaliyi temsil eder.
 
 
 Ağırlıklı Puanlama (Weighted Scoring - Karar Destek Mekanizması):
 
 Projeleri tek bir kritere göre değil, birden fazla kriterin önem derecesine göre sıralamak için kullanılır.
+
 Kod içerisindeki formül şu şekildedir:
 
 $$\text{Final Score} = (Trend \times 0.50) + (Efficiency \times 0.30) + (Budget \times 0.20)$$
@@ -69,6 +82,7 @@ Ham verinin makine öğrenmesi modelleri için anlamlı hale getirilmesi süreci
 Parametrelerin Anlamları ve Dönüşümleri:
 
 Veri:** `Cost` (Maliyet), `Investment` (Yatırım), `Fraud` (Dolandırıcılık Önleme Başarısı), `CSAT` (Müşteri Memnuniyeti), `ProcessingTime` (İşlem Süresi).
+
 Dönüşüm:** CSV dosyasındaki veriler genellikle metin (string) formatında ve ondalık ayracı virgül (`,`) ile gelir. Kod, `str.replace(',', '.')` işlemi ile virgülleri noktaya çevirir ve `pd.to_numeric` ile metni sayısal (float) veriye dönüştürür. Hatalı veya boş veriler `0` ile doldurulur.
 
 
@@ -77,8 +91,10 @@ Dönüşüm:** CSV dosyasındaki veriler genellikle metin (string) formatında v
 
 Projelerin başarısını ölçmek için türetilen matematiksel göstergelerdir.
 
-Bütçe Sapması Skoru (Budget Deviation):**
+Bütçe Sapması Skoru (Budget Deviation):
+
 Maliyetin, planlanan yatırımdan ne kadar saptığını mutlak değer olarak ölçer.
+
 Formül:
 
 $$\text{Budget Deviation} = \left| \frac{\text{Cost} - \text{Investment}}{\text{Investment}} \right|$$
@@ -87,6 +103,7 @@ Bu değerin düşük olması (0'a yakın), projenin bütçeye sadık kaldığın
 
 
 Verimlilik Skoru (Efficiency Score):
+
 Projenin çıktılarını (Başarı ve Memnuniyet) girdisine (Maliyet) oranlar.
 Formül:
 
@@ -101,5 +118,7 @@ Bir projenin yıllar içindeki performans değişim yönünü ve hızını ifade
 * **Yöntem:** Verimlilik skorları () ve Yıllar () arasında  doğrusu çizilir.
 * **Matematiksel Açıklama:** Burada ** (eğim)** değeri hesaplanır.
 Proje performansı yıllar geçtikçe **artmaktaysa** (Pozitif Trend).
+
 Eğer proje performansı **düşmekteyse** (Negatif Trend).
+
 Eğimin büyüklüğü, değişimin hızını gösterir. Kodda bu değer `linregress(Years, Efficiency_Scores)[0]` ile elde edilir.
