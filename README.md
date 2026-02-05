@@ -50,6 +50,7 @@ Ağırlıklı Puanlama (Weighted Scoring - Karar Destek Mekanizması):
 Projeleri tek bir kritere göre değil, birden fazla kriterin önem derecesine göre sıralamak için kullanılır.
 Kod içerisindeki formül şu şekildedir:
 
+$$\text{Final Score} = (Trend \times 0.50) + (Efficiency \times 0.30) + (Budget \times 0.20)$$
 
 Bu formül, projenin gelecekteki potansiyeline (Trend) en yüksek ağırlığı verirken, mevcut verimlilik ve bütçe uyumunu da hesaba katar.
 
@@ -73,6 +74,7 @@ Bütçe Sapması Skoru (Budget Deviation):**
 Maliyetin, planlanan yatırımdan ne kadar saptığını mutlak değer olarak ölçer.
 Formül:
 
+$$\text{Budget Deviation} = \left| \frac{\text{Cost} - \text{Investment}}{\text{Investment}} \right|$$
 
 Bu değerin düşük olması (0'a yakın), projenin bütçeye sadık kaldığını gösterir. Kodda puanlama yapılırken `1 - Budget Deviation` kullanılarak sapmanın az olması ödüllendirilir.
 
@@ -81,6 +83,7 @@ Verimlilik Skoru (Efficiency Score):
 Projenin çıktılarını (Başarı ve Memnuniyet) girdisine (Maliyet) oranlar.
 Formül:
 
+$$\text{Efficiency Score} = \frac{\text{Fraud} \times \text{CSAT}}{\text{Cost}} \times 1.000.000$$
 
 Burada `Fraud` ve `CSAT` değerlerinin yüksek olması, `Cost` değerinin düşük olması skoru artırır. Çarpan (1.000.000), sayıyı daha okunabilir bir ölçeğe taşımak içindir.
 
@@ -89,6 +92,6 @@ Trend Eğimi (Trend Slope - Doğrusal Regresyon):
 Bir projenin yıllar içindeki performans değişim yönünü ve hızını ifade eder.
 * **Yöntem:** Verimlilik skorları () ve Yıllar () arasında  doğrusu çizilir.
 * **Matematiksel Açıklama:** Burada ** (eğim)** değeri hesaplanır.
-Eğer  ise: Proje performansı yıllar geçtikçe **artmaktadır** (Pozitif Trend).
-Eğer  ise: Proje performansı **düşmektedir** (Negatif Trend).
+Proje performansı yıllar geçtikçe **artmaktaysa** (Pozitif Trend).
+Eğer proje performansı **düşmekteyse** (Negatif Trend).
 Eğimin büyüklüğü, değişimin hızını gösterir. Kodda bu değer `linregress(Years, Efficiency_Scores)[0]` ile elde edilir.
