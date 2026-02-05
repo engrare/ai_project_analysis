@@ -117,7 +117,7 @@ Trend Eğimi (Trend Slope - Doğrusal Regresyon):
 Bir projenin yıllar içindeki performans değişim yönünü ve hızını ifade eder.
 * **Yöntem:** Verimlilik skorları () ve Yıllar () arasında  doğrusu çizilir.
 * **Matematiksel Açıklama:** Burada ** (eğim)** değeri hesaplanır.
-* 
+
 Proje performansı yıllar geçtikçe **artmaktaysa** (Pozitif Trend).
 
 Eğer proje performansı **düşmekteyse** (Negatif Trend).
